@@ -1,0 +1,14 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: sales
+      POSTGRES_USER: sales
+      POSTGRES_PASSWORD: sales
+    ports:
+      - "5432:5432"
+    volumes:
+      - sales_data:/var/lib/postgresql/data
+
+volumes:
+  sales_data:

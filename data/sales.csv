@@ -1,0 +1,4 @@
+order_id,order_date,customer_id,product_id,quantity,unit_price
+ORD-1001,2026-01-03,CUST-01,PROD-A,2,12.50
+ORD-1002,2026-01-15,CUST-02,PROD-B,1,25.00
+ORD-1003,2026-02-02,CUST-01,PROD-A,3,12.50
