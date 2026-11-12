@@ -9,6 +9,7 @@ description = "A small CSV-to-PostgreSQL sales data pipeline"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+    "Flask>=3.1,<4",
     "psycopg[binary]>=3.2,<4",
 ]
 
@@ -16,4 +17,4 @@ dependencies = [
 where = ["src"]
 
 [tool.setuptools.package-data]
-sales_pipeline = ["schema.sql"]
+sales_pipeline = ["schema.sql", "templates/*.html", "static/*.css", "static/*.js"]

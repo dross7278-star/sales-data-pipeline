@@ -39,6 +39,16 @@ See [data/sales.csv](data/sales.csv) for a sample.
    python -m sales_pipeline --input data/sales.csv
    ```
 
+4. Open the dashboard:
+
+   ```sh
+   python -m sales_pipeline.web
+   ```
+
+   Then visit <http://127.0.0.1:5000> in your browser. The dashboard shows
+   revenue, sales, items sold, average sale, monthly revenue, top products, and
+   recent sales. Use the menu to change the reporting period.
+
 The program checks the entire file before connecting to the database. If any row
 is incorrect, it reports the row and stops without loading part of that file.
 If a later file contains an existing `order_id`, its saved sale is updated

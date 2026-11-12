@@ -4,8 +4,10 @@ import unittest
 from datetime import date
 from decimal import Decimal
 from pathlib import Path
+from unittest.mock import patch
 
 from sales_pipeline.pipeline import read_sales_csv
+from sales_pipeline.web import app as web_app
 
 
 class ReadSalesCsvTests(unittest.TestCase):
@@ -65,6 +67,30 @@ class ReadSalesCsvTests(unittest.TestCase):
 
             with self.assertRaisesRegex(ValueError, "missing required columns"):
                 read_sales_csv(path)
+
+
+class DashboardRouteTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.client = web_app.test_client()
+
+    def test_dashboard_page_loads(self) -> None:
+        response = self.client.get("/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Sales overview", response.data)
+
+    def test_dashboard_requires_database_url(self) -> None:
+        with patch.dict("os.environ", {}, clear=True):
+            response = self.client.get("/api/dashboard")
+
+        self.assertEqual(response.status_code, 503)
+        self.assertIn("DATABASE_URL", response.json["error"])
+
+    def test_dashboard_rejects_unknown_period(self) -> None:
+        response = self.client.get("/api/dashboard?period=forever")
+
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("Choose a period", response.json["error"])
 
 
 if __name__ == "__main__":
